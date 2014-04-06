@@ -77,12 +77,26 @@ class Player(spyral.Sprite):
         elif self.moving == 'down':
             self.y += paddle_velocity * delta
 
+class Spaceship(spyral.Sprite):
+	def __init__(self, scene):
+		spyral.Sprite.__init__(self, scene)
+		self.image = spyral.image.Image(filename = "images/spaceship/spaceshipRight.png", size = None)
+		self.x = 0
+		self.y = HEIGHT/2
+		self.moving = False
+		spyral.event.register("director.update", self.update)
+
+	def update(self, delta):
+		if self.x<=WIDTH -100:
+			self.x +=5
+		
 class CaptainMath(spyral.Scene):
     def __init__(self, *args, **kwargs):
         global manager
         spyral.Scene.__init__(self, SIZE)
         self.background = spyral.Image("images/fullLevels/planet2_Board.png")
         self.player = Player(self)
+        self.spaceship = Spaceship(self)
         left = "left"
         right="right"
         up = "up"
